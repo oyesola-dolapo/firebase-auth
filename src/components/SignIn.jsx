@@ -25,7 +25,7 @@ export default function signIn() {
               handleGoogleSignUp();
             }}
             className="border-2 rounded-full bg-transparent w-max my-4 place-self-center">
-            <i class="fa-brands fa-google m-3"></i>
+            <i className="fa-brands fa-google m-3"></i>
           </button>
         </div>
         <form

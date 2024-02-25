@@ -93,7 +93,7 @@ export default function AuthPage() {
       if (user) {
         navigate("/Home");
       } else {
-        navigate("/Login");
+        navigate("/");
       }
     });
 
