@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { authContext } from "./AuthPage";
+import { Link } from "react-router-dom";
 
 export default function SignUp() {
   const {
@@ -71,15 +72,14 @@ export default function SignUp() {
           </button>
           <p className="mt-2">
             Have an account?{" "}
-            <a
-              href="#"
+            <Link
+              to="/Login"
               className="underline"
               onClick={() => {
                 setLoginErr();
-                changeState();
               }}>
               Sign In
-            </a>
+            </Link>
           </p>
         </form>
       </div>

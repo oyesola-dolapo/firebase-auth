@@ -1,4 +1,5 @@
 import React, { useState, createContext } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import { auth, googleAuth } from "../config/firebase";
@@ -13,13 +14,13 @@ export const authContext = createContext();
 export default function AuthPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [signedUp, setSignedUp] = useState(false);
+  // const [signedUp, setSignedUp] = useState(false);
   const [emailUsed, setEmailUsed] = useState(false);
   const [loginErr, setLoginErr] = useState(false);
 
-  const changeState = () => {
-    setSignedUp(!signedUp);
-  };
+  // const changeState = () => {
+  //   setSignedUp(!signedUp);
+  // };
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
@@ -66,17 +67,23 @@ export default function AuthPage() {
     handleSignUp,
     handleSignIn,
     handleGoogleSignUp,
-    changeState,
+    // changeState,
     emailUsed,
     loginErr,
     setLoginErr,
-    setEmailUsed
+    setEmailUsed,
   };
 
   return (
     <section className="z-[1]">
       <authContext.Provider value={{ ...values }}>
-        {signedUp ? <SignIn /> : <SignUp />}
+        {/* {signedUp ? <SignIn /> : <SignUp />} */}
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<SignUp />}></Route>
+            <Route path="/Login" element={<SignIn />}></Route>
+          </Routes>
+        </BrowserRouter>
       </authContext.Provider>
     </section>
   );

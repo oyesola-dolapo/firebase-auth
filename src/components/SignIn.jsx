@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
-
 import { authContext } from "./AuthPage";
+import { Link } from "react-router-dom";
 
 export default function signIn() {
   const {
@@ -16,7 +16,7 @@ export default function signIn() {
   const [password, setPassword] = useState();
   return (
     <div className="flex h-screen bg-[#121212] lg:bg-transparent scroll-hidden">
-      <div className="flex flex-col w-full py-16 lg:bg-[#121212] px-8 lg:px-0 lg:w-[50%]">
+      <div className="flex flex-col w-full py-16 lg:bg-[#121212] px-8 lg:px-0 lg:w-[50%] lg:justify-center">
         <div className="text-white flex flex-col">
           <h1 className="text-center opacity-[.6]">Welcome back,</h1>
           <h1 className="text-center text-3xl font-bold tracking-wide">
@@ -35,7 +35,7 @@ export default function signIn() {
             e.preventDefault();
             handleSignIn();
           }}
-          className="text-white w-full lg:w-[26rem] flex flex-col lg:my-auto mx-auto">
+          className="text-white w-full lg:w-[26rem] flex flex-col mx-auto">
           <label htmlFor="email">Email</label>
           <input
             type="email"
@@ -78,15 +78,14 @@ export default function signIn() {
           </button>
           <p className="mt-2">
             Don't Have an Account?{" "}
-            <a
-              href="#"
+            <Link
+              to="/"
               className="underline"
               onClick={() => {
                 setEmailUsed();
-                changeState();
               }}>
               Sign Up
-            </a>
+            </Link>
           </p>
         </form>
       </div>
