@@ -52,7 +52,7 @@ export default function AuthPage() {
   };
 
   return (
-    <section className="z-[1] h-screen">
+    <section className="z-[1]">
       {signedUp ? (
         <SignIn
           handleEmail={handleEmail}

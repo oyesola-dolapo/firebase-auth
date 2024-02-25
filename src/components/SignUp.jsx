@@ -9,7 +9,7 @@ export default function SignUp({
 }) {
   return (
     <div className=" flex">
-      <div className="py-12 flex w-full bg-[#121212] px-8 lg:px-0 lg:w-[50%] min-h-full py-auto">
+      <div className="py-12 flex w-full bg-[#121212] px-8 lg:px-0 lg:w-[50%] py-auto">
         <form
           onSubmit={(e) => {
             e.preventDefault();
