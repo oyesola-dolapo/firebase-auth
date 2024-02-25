@@ -77,7 +77,7 @@ export default function signIn() {
           <p className="mt-2">
             Don't Have an Account?{" "}
             <Link
-              to="/"
+              to="/SignUp"
               className="underline"
               onClick={() => {
                 setEmailUsed();
