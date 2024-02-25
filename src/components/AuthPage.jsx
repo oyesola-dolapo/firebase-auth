@@ -34,7 +34,6 @@ export default function AuthPage() {
       await createUserWithEmailAndPassword(auth, email, password);
       changeState();
     } catch (err) {
-
       if (err.code === "auth/email-already-in-use") {
         setEmailUsed(true);
       }
@@ -44,6 +43,7 @@ export default function AuthPage() {
   const handleSignIn = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
+      setLoginErr(false);
       alert("Successful");
     } catch (err) {
       if (err.code === "auth/invalid-credential") {
@@ -69,6 +69,8 @@ export default function AuthPage() {
     changeState,
     emailUsed,
     loginErr,
+    setLoginErr,
+    setEmailUsed
   };
 
   return (

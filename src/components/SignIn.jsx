@@ -10,19 +10,15 @@ export default function signIn() {
     handleGoogleSignUp,
     changeState,
     loginErr,
+    setEmailUsed,
   } = useContext(authContext);
 
   const [password, setPassword] = useState();
   return (
     <div className="flex h-screen bg-[#121212] lg:bg-transparent scroll-hidden">
-      <div className="flex w-full py-16 lg:bg-[#121212] px-8 lg:px-0 lg:w-[50%]">
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleSignIn();
-          }}
-          className="text-white w-[26rem] flex flex-col lg:my-auto mx-auto">
-          <h1 className="text-center opacity-[.6]">Welcome Back</h1>
+      <div className="flex flex-col w-full py-16 lg:bg-[#121212] px-8 lg:px-0 lg:w-[50%]">
+        <div className="text-white flex flex-col">
+          <h1 className="text-center opacity-[.6]">Welcome back,</h1>
           <h1 className="text-center text-3xl font-bold tracking-wide">
             Sign in to your account
           </h1>
@@ -30,9 +26,16 @@ export default function signIn() {
             onClick={() => {
               handleGoogleSignUp();
             }}
-            className="border-2 rounded-full bg-transparent w-max my-8 place-self-center">
+            className="border-2 rounded-full bg-transparent w-max my-4 place-self-center">
             <i class="fa-brands fa-google m-3"></i>
           </button>
+        </div>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSignIn();
+          }}
+          className="text-white w-full lg:w-[26rem] flex flex-col lg:my-auto mx-auto">
           <label htmlFor="email">Email</label>
           <input
             type="email"
@@ -51,7 +54,9 @@ export default function signIn() {
             className={`${loginErr && "mb-0"}`}
           />
           {loginErr && (
-            <p className="text-[#d32f2f] tracking-wider text-[12px] mt-[.4rem] mb-[1rem]">Invalid email or password</p>
+            <p className="text-[#d32f2f] tracking-wider text-[12px] mt-[.4rem] mb-[1rem]">
+              Invalid email or password
+            </p>
           )}
           <div className="flex justify-between items-center">
             <div>
@@ -77,6 +82,7 @@ export default function signIn() {
               href="#"
               className="underline"
               onClick={() => {
+                setEmailUsed();
                 changeState();
               }}>
               Sign Up

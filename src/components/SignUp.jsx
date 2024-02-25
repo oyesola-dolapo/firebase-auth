@@ -9,9 +9,8 @@ export default function SignUp() {
     handleGoogleSignUp,
     changeState,
     emailUsed,
+    setLoginErr,
   } = useContext(authContext);
-
-  
 
   return (
     <div className=" flex h-screen py-12 lg:py-0 bg-[#121212] lg:bg-transparent">
@@ -76,6 +75,7 @@ export default function SignUp() {
               href="#"
               className="underline"
               onClick={() => {
+                setLoginErr();
                 changeState();
               }}>
               Sign In
