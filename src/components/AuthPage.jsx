@@ -104,8 +104,8 @@ export default function AuthPage() {
     <section>
       <authContext.Provider value={{ ...values }}>
         <Routes>
-          <Route path="/" element={<SignUp />}></Route>
-          <Route path="/Login" element={<SignIn />}></Route>
+          <Route path="/SignUp" element={<SignUp />}></Route>
+          <Route path="/" element={<SignIn />}></Route>
           <Route path="/Home" element={<Home />}></Route>
         </Routes>
       </authContext.Provider>
