@@ -8,14 +8,14 @@ export default function signIn({
   changeState,
 }) {
   return (
-    <div className="flex">
-      <div className="flex w-full bg-[#121212] px-8 lg:px-0 lg:w-[50%] h-screen py-auto">
+    <div className="flex h-screen bg-[#121212] lg:bg-transparent scroll-hidden">
+      <div className="flex w-full py-16 lg:bg-[#121212] px-8 lg:px-0 lg:w-[50%]">
         <form
           onSubmit={(e) => {
             e.preventDefault();
             handleSignIn();
           }}
-          className="text-white w-[26rem] flex flex-col my-auto mx-auto">
+          className="text-white w-[26rem] flex flex-col lg:my-auto mx-auto">
           <h1 className="text-center opacity-[.6]">Welcome Back</h1>
           <h1 className="text-center text-3xl font-bold tracking-wide">
             Sign in to your account
