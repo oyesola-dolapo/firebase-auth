@@ -9,13 +9,13 @@ export default function SignUp({
 }) {
   return (
     <div className=" flex h-screen bg-[#121212] lg:bg-transparent">
-      <div className="py-12 flex w-full lg:bg-[#121212] px-8 lg:px-0 lg:w-[50%] lg:py-auto">
+      <div className="py-12 flex w-full lg:bg-[#121212] px-8 lg:px-0 lg:w-[50%] py-auto">
         <form
           onSubmit={(e) => {
             e.preventDefault();
             handleSignUp();
           }}
-          className="text-white flex flex-col w-[26rem] mx-auto my-auto">
+          className="text-white flex flex-col w-[26rem] mx-auto lg:my-auto">
           <h1 className="text-center opacity-[.6]">Welcome</h1>
           <h1 className="text-center text-3xl font-bold tracking-wide">
             Create an account
