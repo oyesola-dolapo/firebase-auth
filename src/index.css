@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+input {
+  background-color: transparent;
+  border: 1px solid white;
+  padding: 0 0.6rem;
+  height: 3rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  outline: none;
+}
+
+label{
+    margin-bottom: .4rem;
+}
