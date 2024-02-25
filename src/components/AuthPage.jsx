@@ -93,7 +93,7 @@ export default function AuthPage() {
       if (user) {
         navigate("/Home");
       } else {
-        navigate("/");
+        navigate("/Login");
       }
     });
 
@@ -105,7 +105,7 @@ export default function AuthPage() {
       <authContext.Provider value={{ ...values }}>
         <Routes>
           <Route path="/SignUp" element={<SignUp />}></Route>
-          <Route path="/" element={<SignIn />}></Route>
+          <Route path="/Login" element={<SignIn />}></Route>
           <Route path="/Home" element={<Home />}></Route>
         </Routes>
       </authContext.Provider>

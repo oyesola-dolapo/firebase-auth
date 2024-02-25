@@ -72,7 +72,7 @@ export default function SignUp() {
           <p className="mt-2">
             Have an account?{" "}
             <Link
-              to="/"
+              to="/Login"
               className="underline"
               onClick={() => {
                 setLoginErr();
