@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 
-export default function signIn({
-  handleEmail,
-  handlePassword,
-  handleSignIn,
-  handleGoogleSignUp,
-  changeState,
-}) {
+import { authContext } from "./AuthPage";
+
+export default function signIn() {
+  const {
+    handleEmail,
+    handlePassword,
+    handleSignIn,
+    handleGoogleSignUp,
+    changeState,
+    loginErr,
+  } = useContext(authContext);
+
+  const [password, setPassword] = useState();
   return (
     <div className="flex h-screen bg-[#121212] lg:bg-transparent scroll-hidden">
       <div className="flex w-full py-16 lg:bg-[#121212] px-8 lg:px-0 lg:w-[50%]">
@@ -42,7 +48,11 @@ export default function signIn({
             id="password"
             onChange={handlePassword}
             required
+            className={`${loginErr && "mb-0"}`}
           />
+          {loginErr && (
+            <p className="text-[#d32f2f] tracking-wider text-[12px] mt-[.4rem] mb-[1rem]">Invalid email or password</p>
+          )}
           <div className="flex justify-between items-center">
             <div>
               <input

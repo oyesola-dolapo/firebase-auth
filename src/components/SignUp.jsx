@@ -1,21 +1,22 @@
-import React from "react";
+import React, { useContext, useState } from "react";
+import { authContext } from "./AuthPage";
 
-export default function SignUp({
-  handleEmail,
-  handlePassword,
-  handleSignUp,
-  handleGoogleSignUp,
-  changeState,
-}) {
+export default function SignUp() {
+  const {
+    handleEmail,
+    handlePassword,
+    handleSignUp,
+    handleGoogleSignUp,
+    changeState,
+    emailUsed,
+  } = useContext(authContext);
+
+  
+
   return (
-    <div className=" flex h-screen bg-[#121212] lg:bg-transparent">
-      <div className="py-12 flex w-full lg:bg-[#121212] px-8 lg:px-0 lg:w-[50%] py-auto">
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleSignUp();
-          }}
-          className="text-white flex flex-col w-[26rem] mx-auto lg:my-auto">
+    <div className=" flex h-screen py-12 lg:py-0 bg-[#121212] lg:bg-transparent">
+      <div className="lg:py-12 w-full lg:bg-[#121212] px-8 lg:px-0 lg:w-[50%]">
+        <div className="text-white flex flex-col">
           <h1 className="text-center opacity-[.6]">Welcome</h1>
           <h1 className="text-center text-3xl font-bold tracking-wide">
             Create an account
@@ -27,6 +28,13 @@ export default function SignUp({
             className="border-2 rounded-full bg-transparent w-max my-4 place-self-center">
             <i class="fa-brands fa-google m-3"></i>
           </button>
+        </div>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSignUp();
+          }}
+          className="text-white flex flex-col lg:w-[26rem] mx-auto lg:my-auto">
           <label htmlFor="fn">First Name</label>
           <input type="text" placeholder="First Name" id="fn" required />
           <label htmlFor="ln">Last Name</label>
@@ -38,7 +46,13 @@ export default function SignUp({
             id="email"
             onChange={handleEmail}
             required
+            className={`${emailUsed && "mb-0"}`}
           />
+          {emailUsed && (
+            <p className="text-[#d32f2f] tracking-wider text-[12px] mt-[.2rem] mb-[1rem]">
+              Email already used
+            </p>
+          )}
           <label htmlFor="password">Password</label>
           <input
             type="password"

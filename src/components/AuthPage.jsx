@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, createContext } from "react";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import { auth, googleAuth } from "../config/firebase";
@@ -8,10 +8,14 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 
+export const authContext = createContext();
+
 export default function AuthPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [signedUp, setSignedUp] = useState(false);
+  const [emailUsed, setEmailUsed] = useState(false);
+  const [loginErr, setLoginErr] = useState(false);
 
   const changeState = () => {
     setSignedUp(!signedUp);
@@ -30,7 +34,10 @@ export default function AuthPage() {
       await createUserWithEmailAndPassword(auth, email, password);
       changeState();
     } catch (err) {
-      console.log(err.code);
+
+      if (err.code === "auth/email-already-in-use") {
+        setEmailUsed(true);
+      }
     }
   };
 
@@ -39,7 +46,9 @@ export default function AuthPage() {
       await signInWithEmailAndPassword(auth, email, password);
       console.log("Successful");
     } catch (err) {
-      alert(err.code);
+      if (err.code === "auth/invalid-credential") {
+        setLoginErr(true);
+      }
     }
   };
 
@@ -47,29 +56,26 @@ export default function AuthPage() {
     try {
       await signInWithPopup(auth, googleAuth);
     } catch (err) {
-      console.log(err.code);
+      alert(err.code);
     }
+  };
+
+  const values = {
+    handleEmail,
+    handlePassword,
+    handleSignUp,
+    handleSignIn,
+    handleGoogleSignUp,
+    changeState,
+    emailUsed,
+    loginErr,
   };
 
   return (
     <section className="z-[1]">
-      {signedUp ? (
-        <SignIn
-          handleEmail={handleEmail}
-          handlePassword={handlePassword}
-          handleSignIn={handleSignIn}
-          handleGoogleSignUp={handleGoogleSignUp}
-          changeState={changeState}
-        />
-      ) : (
-        <SignUp
-          handleEmail={handleEmail}
-          handlePassword={handlePassword}
-          handleSignUp={handleSignUp}
-          handleGoogleSignUp={handleGoogleSignUp}
-          changeState={changeState}
-        />
-      )}
+      <authContext.Provider value={{ ...values }}>
+        {signedUp ? <SignIn /> : <SignUp />}
+      </authContext.Provider>
     </section>
   );
 }
