@@ -8,12 +8,10 @@ export default function signIn() {
     handlePassword,
     handleSignIn,
     handleGoogleSignUp,
-    changeState,
     loginErr,
     setEmailUsed,
   } = useContext(authContext);
 
-  const [password, setPassword] = useState();
   return (
     <div className="flex h-screen bg-[#121212] lg:bg-transparent scroll-hidden">
       <div className="flex flex-col w-full py-16 lg:bg-[#121212] px-8 lg:px-0 lg:w-[50%] lg:justify-center">
@@ -54,7 +52,7 @@ export default function signIn() {
             className={`${loginErr && "mb-0"}`}
           />
           {loginErr && (
-            <p className="text-[#d32f2f] tracking-wider text-[12px] mt-[.4rem] mb-[1rem]">
+            <p className="text-[#d32f2f] tracking-wider text-[12px] mt-[.4rem] mb-[1rem] shake">
               Invalid email or password
             </p>
           )}

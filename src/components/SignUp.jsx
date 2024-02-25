@@ -8,7 +8,6 @@ export default function SignUp() {
     handlePassword,
     handleSignUp,
     handleGoogleSignUp,
-    changeState,
     emailUsed,
     setLoginErr,
   } = useContext(authContext);
@@ -49,7 +48,7 @@ export default function SignUp() {
             className={`${emailUsed && "mb-0"}`}
           />
           {emailUsed && (
-            <p className="text-[#d32f2f] tracking-wider text-[12px] mt-[.2rem] mb-[1rem]">
+            <p className="text-[#d32f2f] tracking-wider text-[12px] mt-[.2rem] mb-[1rem] shake">
               Email already used
             </p>
           )}

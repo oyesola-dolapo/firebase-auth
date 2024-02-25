@@ -1,5 +1,5 @@
-import React, { useState, createContext } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React, { useState, createContext, useEffect } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import { auth, googleAuth } from "../config/firebase";
@@ -7,20 +7,21 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signInWithPopup,
+  onAuthStateChanged,
+  signOut,
 } from "firebase/auth";
+import Home from "./Home";
 
 export const authContext = createContext();
 
 export default function AuthPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [signedUp, setSignedUp] = useState(false);
   const [emailUsed, setEmailUsed] = useState(false);
   const [loginErr, setLoginErr] = useState(false);
+  const [user, setUser] = useState(null);
 
-  // const changeState = () => {
-  //   setSignedUp(!signedUp);
-  // };
+  const navigate = useNavigate();
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
@@ -33,7 +34,6 @@ export default function AuthPage() {
   const handleSignUp = async () => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      changeState();
     } catch (err) {
       if (err.code === "auth/email-already-in-use") {
         setEmailUsed(true);
@@ -45,7 +45,6 @@ export default function AuthPage() {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       setLoginErr(false);
-      alert("Successful");
     } catch (err) {
       if (err.code === "auth/invalid-credential") {
         setLoginErr(true);
@@ -61,30 +60,59 @@ export default function AuthPage() {
     }
   };
 
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.error("Error signing out:", error);
+    }
+  };
+
   const values = {
     handleEmail,
     handlePassword,
     handleSignUp,
     handleSignIn,
     handleGoogleSignUp,
-    // changeState,
+    handleSignOut,
     emailUsed,
     loginErr,
     setLoginErr,
     setEmailUsed,
   };
 
+  useEffect(() => {
+    if (email === "") {
+      setEmailUsed(false);
+      setLoginErr(false);
+    }
+  }, [handleEmail]);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        navigate("/Home");
+      } else {
+        navigate("/Login");
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   return (
-    <section className="z-[1]">
+    <section>
       <authContext.Provider value={{ ...values }}>
-        {/* {signedUp ? <SignIn /> : <SignUp />} */}
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<SignUp />}></Route>
-            <Route path="/Login" element={<SignIn />}></Route>
-          </Routes>
-        </BrowserRouter>
+        <Routes>
+          <Route path="/" element={<SignUp />}></Route>
+          <Route path="/Login" element={<SignIn />}></Route>
+          <Route path="/Home" element={<Home />}></Route>
+        </Routes>
       </authContext.Provider>
     </section>
   );
+}
+
+{
+  /* {signedUp ? <SignIn /> : <SignUp />} */
 }
