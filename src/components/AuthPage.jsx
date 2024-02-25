@@ -44,7 +44,7 @@ export default function AuthPage() {
   const handleSignIn = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      console.log("Successful");
+      alert("Successful");
     } catch (err) {
       if (err.code === "auth/invalid-credential") {
         setLoginErr(true);
