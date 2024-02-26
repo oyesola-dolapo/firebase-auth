@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 
 export default function SignUp() {
   const {
+    handleFirstName,
+    handleLastName,
     handleEmail,
     handlePassword,
     handleSignUp,
@@ -35,9 +37,9 @@ export default function SignUp() {
           }}
           className="text-white flex flex-col lg:w-[26rem] mx-auto lg:my-auto">
           <label htmlFor="fn">First Name</label>
-          <input type="text" placeholder="First Name" id="fn" required />
+          <input type="text" placeholder="First Name" id="fn" required onChange={handleFirstName}/>
           <label htmlFor="ln">Last Name</label>
-          <input type="text" placeholder="Last Name" id="ln" required />
+          <input type="text" placeholder="Last Name" id="ln" required onChange={handleLastName}/>
           <label htmlFor="email">Email</label>
           <input
             type="email"

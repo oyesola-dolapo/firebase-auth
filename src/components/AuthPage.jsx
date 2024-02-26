@@ -2,7 +2,7 @@ import React, { useState, createContext, useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
-import { auth, googleAuth } from "../config/firebase";
+import { auth, googleAuth, db } from "../config/firebase";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -10,21 +10,34 @@ import {
   onAuthStateChanged,
   signOut,
 } from "firebase/auth";
+import { collection, addDoc, getDocs, doc, setDoc } from "firebase/firestore";
 import Home from "./Home";
 
 export const authContext = createContext();
 
 export default function AuthPage() {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailUsed, setEmailUsed] = useState(false);
   const [loginErr, setLoginErr] = useState(false);
-  const [user, setUser] = useState(null);
+  const [username, setUsername] = useState(null);
+
+  const userCollection = collection(db, "userDetails");
 
   const navigate = useNavigate();
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
+  };
+
+  const handleFirstName = (e) => {
+    setFirstName(e.target.value);
+  };
+
+  const handleLastName = (e) => {
+    setLastName(e.target.value);
   };
 
   const handlePassword = (e) => {
@@ -33,13 +46,40 @@ export default function AuthPage() {
 
   const handleSignUp = async () => {
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+      const userDocRef = doc(userCollection, user.uid);
+
+      await setDoc(userDocRef, {
+        username: firstName,
+        email: email,
+      });
     } catch (err) {
       if (err.code === "auth/email-already-in-use") {
         setEmailUsed(true);
       }
     }
   };
+
+  useEffect(() => {
+    const getUserDetails = async () => {
+      try {
+        const datas = await getDocs(userCollection);
+        const data = datas.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        }));
+        setUsername(data[0].username)
+      } catch (err) {
+        console.log(err.code);
+      }
+    };
+    getUserDetails();
+  }, []);
 
   const handleSignIn = async () => {
     try {
@@ -54,7 +94,7 @@ export default function AuthPage() {
 
   const handleGoogleSignUp = async () => {
     try {
-      await signInWithPopup(auth, googleAuth);
+      const userCredential = await signInWithPopup(auth, googleAuth);
     } catch (err) {
       alert(err.code);
     }
@@ -69,6 +109,8 @@ export default function AuthPage() {
   };
 
   const values = {
+    handleFirstName,
+    handleLastName,
     handleEmail,
     handlePassword,
     handleSignUp,
@@ -79,6 +121,7 @@ export default function AuthPage() {
     loginErr,
     setLoginErr,
     setEmailUsed,
+    username
   };
 
   useEffect(() => {
